@@ -1,6 +1,5 @@
 package gyeongmann.dmailbot.bot;
 
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
