@@ -13,7 +13,7 @@ public class Scheduler {
     private final Bot bot;
     private final UnreadMailReader unreadMailReader;
 
-    @Scheduled(fixedRate = 18000000)
+    @Scheduled(cron = "0 0 9-18 ? * MON-FRI")
     public void run() {
         unreadMailReader.getUnreadMessages(bot);
     }
