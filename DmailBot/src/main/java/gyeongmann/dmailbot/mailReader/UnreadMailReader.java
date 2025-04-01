@@ -30,6 +30,9 @@ public class UnreadMailReader {
     @Value("${PASSWORD}")
     private String password;
 
+    @Value("${CHAT_ID}")
+    private String chatId;
+
     public List<Message> getUnreadMessages(Bot bot) {
         List<Message> unread = new ArrayList<>();
 
@@ -51,7 +54,7 @@ public class UnreadMailReader {
             unread.addAll(Arrays.asList(messages));
 
             for (Message message : unread) {
-                bot.sendText(7089252509L, print(message));
+                bot.sendText(Long.parseLong(chatId), print(message));
             }
 
             inbox.close(false);
