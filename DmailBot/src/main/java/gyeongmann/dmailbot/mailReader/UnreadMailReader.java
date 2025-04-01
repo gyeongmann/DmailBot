@@ -1,7 +1,9 @@
 package gyeongmann.dmailbot.mailReader;
 
 import gyeongmann.dmailbot.bot.Bot;
+import gyeongmann.dmailbot.redis.RedisService;
 import jakarta.mail.*;
+import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.internet.MimeUtility;
 import jakarta.mail.search.FlagTerm;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,8 @@ import java.util.Properties;
 @RequiredArgsConstructor
 public class UnreadMailReader {
 
+    private final RedisService redisService;
+
     @Value("${IMAP_HOST}")
     private String host;
 
@@ -33,7 +37,7 @@ public class UnreadMailReader {
     @Value("${CHAT_ID}")
     private String chatId;
 
-    public List<Message> getUnreadMessages(Bot bot) {
+    public void getUnreadMessages(Bot bot) {
         List<Message> unread = new ArrayList<>();
 
         Properties props = new Properties();
@@ -54,7 +58,11 @@ public class UnreadMailReader {
             unread.addAll(Arrays.asList(messages));
 
             for (Message message : unread) {
-                bot.sendText(Long.parseLong(chatId), print(message));
+                String messageId = ((MimeMessage) message).getMessageID();
+                if (!redisService.isAlreadySent(messageId)) {
+                    bot.sendText(Long.parseLong(chatId), print(message));
+                    redisService.markAsSent(messageId);
+                }
             }
 
             inbox.close(false);
@@ -63,7 +71,6 @@ public class UnreadMailReader {
 //            e.printStackTrace();
         }
 
-        return unread;
     }
 
     private String print(Message message) throws MessagingException, UnsupportedEncodingException {
