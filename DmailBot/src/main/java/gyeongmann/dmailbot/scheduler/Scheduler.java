@@ -22,7 +22,6 @@ public class Scheduler {
         if (now.getMinute() == 0) {
             System.out.println("⏰ 정각 실행됨: " + now);
         }
-
         unreadMailReader.getUnreadMessages(bot);
     }
 }
