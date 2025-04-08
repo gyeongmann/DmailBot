@@ -9,20 +9,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableScheduling
-@Slf4j
 public class DmailBotApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(DmailBotApplication.class, args);
     }
 
-    @PostConstruct
-    public void init() {
-        log.info("DmailBotApplication started successfully!");
-    }
-
-    @PreDestroy
-    public void cleanup() {
-        log.info("DmailBotApplication is shutting down...");
-    }
 }
