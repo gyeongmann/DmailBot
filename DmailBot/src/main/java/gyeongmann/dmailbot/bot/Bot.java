@@ -16,10 +16,10 @@ import java.time.LocalDateTime;
 @Slf4j
 public class Bot extends TelegramLongPollingBot {
 
-
-    @PostConstruct
-    public void init() {
-        log.info("DmailBot started successfully! / " + LocalDateTime.now());
+    @Override
+    public void onRegister() {
+        // 이 메서드는 TelegramBotsApi에 등록될 때 호출됨
+        log.info("✅ DmailBot successfully registered with Telegram API / " + LocalDateTime.now());
     }
 
     private final String BOT_API_KEY;
