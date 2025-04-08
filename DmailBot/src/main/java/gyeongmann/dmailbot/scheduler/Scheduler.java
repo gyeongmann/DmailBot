@@ -15,7 +15,7 @@ public class Scheduler {
     private final Bot bot;
     private final UnreadMailReader unreadMailReader;
 
-    @Scheduled(cron = "0 * 9-17 ? * MON-FRI")
+    @Scheduled(cron = "0 * 9-23 ? * MON-FRI")
     public void run() {
         LocalTime now = LocalTime.now();
 
